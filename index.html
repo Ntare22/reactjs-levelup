@@ -3,33 +3,61 @@
 <head>
   <meta charset='utf-8'>
   <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-  <title>First Component</title>
+  <title>JSX vs React.DOM</title>
   <meta name='viewport' content='width=device-width, initial-scale=1'>
   <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
 </head>
 <body>
-  <div id="app"></div>
+  <!-- container node -->
+  <!-- jsx allows us to write html-like node in our syntax -->
+  <div id="jsx"></div>
+
+  <!-- container node -->
+  <div id="dom"></div>
 
   <script src='http://fb.me/react-0.11.1.js'></script>
   <script src='http://fb.me/JSXTransformer-0.11.1.js'></script>
   <script type='text/jsx'>
-    /** @jsx React.DOM */
+  /** @jsx React.DOM */
 
-    const messageBox = React.createClass({
-      render: function() {
-        return (
+  const messageBoxJSX = React.createClass({
+    render: function() {
+      return (
+        <div className="container">
           <h1>Hello, World</h1>
-        );
-      }
-    });
+          <subMessage />
+        </div>
+      )
+    }
+  });
 
-    React.renderComponent(
-      <messageBox />,
-      document.querySelector('#app'),
-      function() {
-        console.log('after render');
-      }
-    )
+  const messageBoxDOM = React.createClass({
+    render: function() {
+      return React.DOM.div(
+        { className: 'container'},
+        React.DOM.h1(null, 'Hello, World'),
+        subMessage(null)
+      )
+    }
+  });
+
+  const subMessage = React.createClass({
+    render: function() {
+      return (
+        <small>Its good to see you!</small>
+      )
+    }
+  })
+
+  const reactComponentJSX = React.renderComponent(
+    <messageBoxJSX />,
+    document.querySelector('#jsx')
+  )
+
+  const reactComponentDOM = React.renderComponent(
+    messageBoxDOM(null),
+    document.querySelector('#dom')
+  )
   </script>
 </body>
 </html>
