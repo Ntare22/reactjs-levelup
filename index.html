@@ -3,7 +3,7 @@
 <head>
   <meta charset='utf-8'>
   <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-  <title>First Component</title>
+  <title>Events</title>
   <meta name='viewport' content='width=device-width, initial-scale=1'>
   <link rel='stylesheet' type='text/css' media='screen' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
 </head>
@@ -16,6 +16,14 @@
     /** @jsx React.DOM */
 
     const messageBox = React.createClass({
+
+      handleAdd: function(e) {
+        const newMessage = this.refs.newMessage.getDOMNode().value;
+        const newMessages = this.state.messages.concat([newMessage]);
+        this.setState({
+          messages: newMessages
+        })
+      },
 
       getInitialState: function() {
         return {
@@ -42,6 +50,8 @@
         return (
           <div className='container jumbotron' style={inlineStyles}>
             <h2>Hello, World</h2>
+            <input ref='newMessage' type='text' />
+            <button class='btn btn-primary' onClick={this.handleAdd}>Add</button>
             { messages }
           </div>
         );
